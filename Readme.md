@@ -38,16 +38,16 @@ sudo pip install wcwidth==0.2.5
 
 # if using virtual environment python
 
-virtualenv quizenv
-source quizenv/bin/activate
+virtualenv venv
+source venv/bin/activate
 pip install -r requir.txt
 ```
 
 ## Run code here
 ```elixir
-git clone https://github.com/manioftony/Quiz-App
-cd Quiz-App
-python manage.py runserver
+git clone https://github.com/manioftony/Quiz
+cd Quiz
+python manage.py runserver 0.0.0.0:80
 
 http://127.0.0.1:8000/
 ```
@@ -57,32 +57,120 @@ http://127.0.0.1:8000/
 
 ## culr command
 
--------------curl -H "Accept: application/json" -H "Content-type: application/json" -X POST -d '{"username": "mani", "password": "admin@123"}' http://127.0.0.1:8000/api-token-auth/
 
-result:
-    {"token":"e036d94d1a5cc4b3d17a9ef084f8f1a1c7b45f71"}
+-------------curl -X GET -i  http://127.0.0.1:8000/question-answer/
 
--------------curl -X GET -i -H "Content-Type: application/json" -H "Authorization: Token e036d94d1a5cc4b3d17a9ef084f8f1a1c7b45f71" http://127.0.0.1:8000/question-answer/
 
 result :
 
 ```elixir
+
+
 {
-    'data': [{
-            'answer': '4',
-            'question': 'what is 2+2?'
+    "data": [
+        {
+            "answers": [
+                {
+                    "correct": false,
+                    "answerText": "Paris"
+                },
+                {
+                    "correct": true,
+                    "answerText": "Carcassonne"
+                },
+                {
+                    "correct": false,
+                    "answerText": "Clermont-Ferrand"
+                },
+                {
+                    "correct": false,
+                    "answerText": "Marseille"
+                }
+            ],
+            "questionText": "Carcassonne is based on which French town?"
         },
         {
-            'answer': '2',
-            'question': 'what is 4-2?'
+            "answers": [
+                {
+                    "correct": true,
+                    "answerText": "True"
+                },
+                {
+                    "correct": false,
+                    "answerText": "False"
+                }
+            ],
+            "questionText": "In the 1988 film &quot;Akira&quot;, Tetsuo ends up destroying Tokyo."
         },
         {
-            'answer': '38',
-            'question': 'what is 19*2?'
+            "answers": [
+                {
+                    "correct": false,
+                    "answerText": "Lancaster"
+                },
+                {
+                    "correct": false,
+                    "answerText": "Stuart"
+                },
+                {
+                    "correct": false,
+                    "answerText": "York"
+                },
+                {
+                    "correct": true,
+                    "answerText": "Tudor"
+                }
+            ],
+            "questionText": "King Henry VIII was the second monarch of which European royal house?"
+        },
+        {
+            "answers": [
+                {
+                    "correct": false,
+                    "answerText": "J. R. R. Tolkien"
+                },
+                {
+                    "correct": false,
+                    "answerText": "William Shakespeare"
+                },
+                {
+                    "correct": false,
+                    "answerText": "William Golding"
+                },
+                {
+                    "correct": true,
+                    "answerText": "Herman Melville"
+                }
+            ],
+            "questionText": "Who wrote the novel &quot;Moby-Dick&quot;?"
+        },
+        {
+            "answers": [
+                {
+                    "correct": false,
+                    "answerText": "Silver"
+                },
+                {
+                    "correct": false,
+                    "answerText": "Gold"
+                },
+                {
+                    "correct": false,
+                    "answerText": "Tin"
+                },
+                {
+                    "correct": true,
+                    "answerText": "Iron"
+                }
+            ],
+            "questionText": "Which element has the chemical symbol &#039;Fe&#039;?"
         }
     ],
-    'status': 200
+    "status": 200
 }
+
+
+
 ```
 
 
@@ -94,16 +182,6 @@ sudo pip install requests
     or 
 pip install requests
 
-myurl = 'http://127.0.0.1:8000/api-token-auth/'
-
-auth = {'username': 'mani', 'password': 'admin@123'}
-
-response = requests.post(myurl, auth)
-
-token = response.json()['token']
-
-headers = {'Authorization': 'Token %s' % token}
-
 url = 'http://127.0.0.1:8000/question-answer/'
 
 response = requests.get(url, headers=headers)
@@ -114,20 +192,108 @@ print(response.json())
 result :
 
 ```elixir
+
+
 {
-    'data': [{
-            'answer': '4',
-            'question': 'what is 2+2?'
+    "data": [
+        {
+            "answers": [
+                {
+                    "correct": false,
+                    "answerText": "Paris"
+                },
+                {
+                    "correct": true,
+                    "answerText": "Carcassonne"
+                },
+                {
+                    "correct": false,
+                    "answerText": "Clermont-Ferrand"
+                },
+                {
+                    "correct": false,
+                    "answerText": "Marseille"
+                }
+            ],
+            "questionText": "Carcassonne is based on which French town?"
         },
         {
-            'answer': '2',
-            'question': 'what is 4-2?'
+            "answers": [
+                {
+                    "correct": true,
+                    "answerText": "True"
+                },
+                {
+                    "correct": false,
+                    "answerText": "False"
+                }
+            ],
+            "questionText": "In the 1988 film &quot;Akira&quot;, Tetsuo ends up destroying Tokyo."
         },
         {
-            'answer': '38',
-            'question': 'what is 19*2?'
+            "answers": [
+                {
+                    "correct": false,
+                    "answerText": "Lancaster"
+                },
+                {
+                    "correct": false,
+                    "answerText": "Stuart"
+                },
+                {
+                    "correct": false,
+                    "answerText": "York"
+                },
+                {
+                    "correct": true,
+                    "answerText": "Tudor"
+                }
+            ],
+            "questionText": "King Henry VIII was the second monarch of which European royal house?"
+        },
+        {
+            "answers": [
+                {
+                    "correct": false,
+                    "answerText": "J. R. R. Tolkien"
+                },
+                {
+                    "correct": false,
+                    "answerText": "William Shakespeare"
+                },
+                {
+                    "correct": false,
+                    "answerText": "William Golding"
+                },
+                {
+                    "correct": true,
+                    "answerText": "Herman Melville"
+                }
+            ],
+            "questionText": "Who wrote the novel &quot;Moby-Dick&quot;?"
+        },
+        {
+            "answers": [
+                {
+                    "correct": false,
+                    "answerText": "Silver"
+                },
+                {
+                    "correct": false,
+                    "answerText": "Gold"
+                },
+                {
+                    "correct": false,
+                    "answerText": "Tin"
+                },
+                {
+                    "correct": true,
+                    "answerText": "Iron"
+                }
+            ],
+            "questionText": "Which element has the chemical symbol &#039;Fe&#039;?"
         }
     ],
-    'status': 200
+    "status": 200
 }
 

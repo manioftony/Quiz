@@ -22,16 +22,13 @@ from rest_framework.authtoken.views import obtain_auth_token
 # from django
 urlpatterns = [
   #  url(r'^$',index),
-    # url(r'^$',login_data),
+    url(r'^$',login_data),
     # url(r'^usercreation/$',createuser),
     url(r'^index/$',index),
     url(r'^question-answer/$', QuestionAnswerView.as_view(), name='question'),
     url(r'^api-token-auth/$', obtain_auth_token, name='api_token_auth'),
     url(r'^admin/', admin.site.urls),
-
     url(r'^logout/$',logout_request),
-
-
     url(r"^question_answer/$", question_answer, name="logout"),
 
 
